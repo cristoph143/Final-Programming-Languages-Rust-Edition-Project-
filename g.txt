@@ -1,0 +1,25 @@
+fn is_correct_grammar(sorted_map: &Vec<(&usize, &Dictionary)>) -> bool {
+    // initialize a counter
+    let counter = 0;
+    // intitialize bool
+    let mut is_correct_grammar = true;
+    // if the first index of sorted map data_type is not "Keyword", then return false
+    if sorted_map[0].1.data_type != "Keyword" {
+        return false
+    }
+    // if the second index of sorted map data_type is not "identifier", then return false
+    if sorted_map[1].1.data_type != "Identifier" {
+        return false;
+    }
+    // iterate the sorted map from the third index until the last index
+    sorted_map.iter().skip(2).for_each(|(_idx, dictionary)| {
+        // check if the data_type of the current index is "Terminator"
+        if dictionary.data_type == "Terminator" {
+            // if the data_type of the previous index is "Equals_op", then return false
+            if sorted_map[counter].1.data_type == "Equals_op" {
+                is_correct_grammar = false;
+            }
+        }
+    });
+    return is_correct_grammar;
+}

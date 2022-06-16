@@ -12,6 +12,7 @@ impl Dictionary{
         }
     }
 }
+
 fn main(){
     // accept string input from the users
     println!("Enter a string: ");
@@ -25,12 +26,20 @@ fn main(){
     // iterate over the split string
     for word in input_split{
         // call get_data_type function and save the result
-        let data_type = get_data_type(word);
+        let data_types = get_data_type(word);
         // save word and data_type to Dictionary
-        let dictionary = Dictionary::new(word.to_string(), data_type.to_string());
+        let dictionary = Dictionary::new(word.to_string(), data_types.to_string());
         // save the dictionary to the map with current index
         map.insert(map.len(), dictionary);
     }
+    // sort the map by index
+    let mut sorted_map: Vec<(&usize, &Dictionary)> = map.iter().collect::<Vec<(&usize, &Dictionary)>>();
+    sorted_map.sort_by(|a, b| a.0.cmp(&b.0));
+    print_map(&map, sorted_map);
+}
+
+fn print_map(map: &HashMap<usize, Dictionary>, sorted_map: Vec<(&usize, &Dictionary)>) {
+    // print the map
     print!("------------------------------------------------");
     print!("Unsorted Map!");
     print!("------------------------------------------------\n");
@@ -38,17 +47,13 @@ fn main(){
     for (index, dictionary) in map.iter(){
         println!("{} {} {}", index, dictionary.words, dictionary.data_type);
     }
-    // sort the map by index
-    let mut sorted_map = map.iter().collect::<Vec<(&usize, &Dictionary)>>();
-    sorted_map.sort_by(|a, b| a.0.cmp(&b.0));
     // print the sorted map
     print!("------------------------------------------------");
     print!("Sorted Map!");
     print!("------------------------------------------------\n");
-    for (index, dictionary) in sorted_map{
+    for (index, dictionary) in sorted_map.iter(){
         println!("{} {} {}", index, dictionary.words, dictionary.data_type);
     }
-    
 }
 
 // Lexical Analyzer
@@ -80,6 +85,4 @@ fn get_data_type(word: &str) -> String {
         _ => "null".to_string(),
     }
 }
-
-// Syntax Analyzer
 
