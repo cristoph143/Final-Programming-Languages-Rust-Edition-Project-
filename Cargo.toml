@@ -5,3 +5,7 @@ path = "src/main.rs"
 [dependencies]
 io = "^0.0.2"
 hashmap = "^0.0.1"
+console = "^0.15.0"
+bnf = "^0.3.4"
+Rule = "^0.1.0"
+builder = "^0.1.0"
